@@ -35,10 +35,11 @@ export function useSizes(
 
   const handleResize = useCallback(() => {
     // if (!target && !step?.highlightedSelectors) return
-    setdDimensions(
-      getHighlightedRect(target, step?.highlightedSelectors, step?.bypassElem)
-    )
-  }, [target, step?.highlightedSelectors])
+    const newDimensions = getHighlightedRect(target, step?.highlightedSelectors, step?.bypassElem)
+    if (Object.entries(dimensions).some(([key, value]) => newDimensions[key] !== value)) {
+        setdDimensions(newDimensions)
+    }
+  }, [target, step?.highlightedSelectors, dimensions])
 
   useEffect(() => {
     handleResize()
